@@ -307,7 +307,7 @@ public class drivestick extends OpMode {
     private void Grabber() {
 
        if (gamepad2.left_trigger > 0) {
-            dildo.setPosition(0.4); //tune this value until
+            dildo.setPosition(0.9); //tune this value until
         } else if (gamepad2.right_trigger > 0) {
             dildo.setPosition(0.7);//tune this value until
         }
