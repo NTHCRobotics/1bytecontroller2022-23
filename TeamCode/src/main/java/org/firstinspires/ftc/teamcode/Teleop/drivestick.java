@@ -88,20 +88,10 @@ public class drivestick extends OpMode {
     private Servo dildo;
     private Servo turn;
 
-// pidf controller---------------------------------------------------
-private PIDController controller;
 
-    public static double p = 0, i = 0, d = 0;
-    public static double f = 0;
-
-    public static int target = 0;
-
-    private final double tick_in_degree = 700/ 180.0;
 
     private DcMotorEx flip;
 
-
-    //-------------------------------------------------------
 
 
 
@@ -124,12 +114,8 @@ private PIDController controller;
      */
     @Override
     public void init() {
-//pidf controller------------------------------------------------------------------------------------------------
-        controller = new PIDController(p, i, d);
-       telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        flip = hardwareMap.get(DcMotorEx.class, "flip");
 
-      //--------------------------------------------------------------------------------------------------------------
+        flip = hardwareMap.get(DcMotorEx.class, "flip");
 
 
         telemetry.addData("Status", "Initialization Started");
@@ -158,7 +144,11 @@ private PIDController controller;
 
 
 
-
+        Viper.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        Viper.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        Viper.setTargetPosition(260);
+        Viper.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Viper.setTargetPositionTolerance(50);
 
 
         wheelFL.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -206,12 +196,7 @@ private PIDController controller;
         Grabber();
         flipper();
         turn();
-        //pidf controller---------------------------------------------------------------------------------------
-controller.setPID(p,i,d);
-int armPos = flip.getCurrentPosition();
-double pid = controller.calculate(armPos, target);
-double ff = Math.cos(Math.toRadians(target/ tick_in_degree)) * f;
-double power = pid + ff;
+
 
 
         telemetry.addData("Left Trigger Position", gamepad1.left_trigger);
@@ -333,12 +318,14 @@ double power = pid + ff;
 
         if (gamepad2.right_bumper) {
             flip.setPower(-0.7);
+            flip.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
         }
         else if (gamepad2.left_bumper) {
             flip.setPower(0.7);
+            flip.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
         }
      else {
-            flip.setPower(-0.23);
+            flip.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         }
 }
 
