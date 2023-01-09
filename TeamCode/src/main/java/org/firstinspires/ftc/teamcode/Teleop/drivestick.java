@@ -101,6 +101,7 @@ public class drivestick extends OpMode {
     private double rotation = 0;
     final double TRIGGER_THRESHOLD  = 0.75;
     private int[] armLevelPosition = {0, 1200, 2000, 3000};
+    private int[] flipposPosition = {0, 925};
     private boolean isGrabbing = false;
     private int armLevel;
     private double previousRunTime;
@@ -150,6 +151,12 @@ public class drivestick extends OpMode {
         Viper.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Viper.setTargetPositionTolerance(50);
 
+        flip.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        flip.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        flip.setTargetPosition(100);
+        flip.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        flip.setTargetPositionTolerance(50);
+
 
         wheelFL.setDirection(DcMotorSimple.Direction.FORWARD);
         wheelFR.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -170,7 +177,7 @@ public class drivestick extends OpMode {
     @Override
     public void init_loop() {
         turn.setPosition(0.85);
-        flip.setPower(-0.23);
+
     }
 
     /*
@@ -196,6 +203,7 @@ public class drivestick extends OpMode {
         Grabber();
         flipper();
         turn();
+
 
 
 
@@ -316,26 +324,45 @@ public class drivestick extends OpMode {
 
     private void flipper() {
 
+//        if (gamepad2.right_bumper) {
+//            flip.setPower(-0.7);
+//
+//        }  else if (gamepad2.left_bumper) {
+//            flip.setPower(0.7);
+//        }
+//     else {
+//         flip.setPower(-0.27);
+//
+//        }
+
+
         if (gamepad2.right_bumper) {
-            flip.setPower(-0.7);
-            flip.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
+            flip.setTargetPosition(flipposPosition[1]);
+            flip.setVelocity(650);
+            turn.setPosition(0.19);
         }
         else if (gamepad2.left_bumper) {
-            flip.setPower(0.7);
-            flip.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
+            flip.setTargetPosition(flipposPosition[0]);
+            flip.setVelocity(650);
+            turn.setPosition(0.85);
         }
-     else {
-            flip.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        }
-}
+        flip.setVelocity(1000);
+        if (armLevel == 1) {
+            flip.setVelocity(2000);
 
-    public static void wait(int ms) {
-        try {
-            Thread.sleep(ms); //core java delay command
-        } catch (InterruptedException ex) {
-            Thread.currentThread().interrupt(); //this exception is useful to remove the glitches and errors of the thread.sleep()
+            //if statement to set speed only going down
         }
+
+        if (getRuntime() - previousRunTime >= inputDelayInSeconds + .25 && rumbleLevel) {
+
+        }
+
+
     }
+    }
+
+
+
 
 
         /*
@@ -346,7 +373,7 @@ public class drivestick extends OpMode {
          * Code to run ONCE after the driver hits STOP
          */
 
-    }
+
     //@Override
 
 
