@@ -107,7 +107,7 @@ public class BlueRight_RedRight extends LinearOpMode
 //add trejectorys
         Pose2d startpose = new Pose2d();
         TrajectorySequence Left = drive.trajectorySequenceBuilder(startpose)
-
+                .UNSTABLE_addTemporalMarkerOffset(-0, () -> dildo.setPosition(0))
                 .back(-52)
                 .turn(1)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> Viper.setTargetPosition(TopL))
@@ -123,7 +123,7 @@ public class BlueRight_RedRight extends LinearOpMode
 
                 //.forward(30)
                 //.build();
-                
+                .UNSTABLE_addTemporalMarkerOffset(-0, () -> dildo.setPosition(0))
                 .back(-52)
                 .turn(1)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> Viper.setTargetPosition(TopL))
@@ -141,6 +141,7 @@ public class BlueRight_RedRight extends LinearOpMode
         TrajectorySequence Right = drive.trajectorySequenceBuilder(startpose)
                 //.forward(26)
                 //.strafeRight(22)
+                .UNSTABLE_addTemporalMarkerOffset(-0, () -> dildo.setPosition(0))
                 .back(-52)
                 .turn(1)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> Viper.setTargetPosition(TopL))
