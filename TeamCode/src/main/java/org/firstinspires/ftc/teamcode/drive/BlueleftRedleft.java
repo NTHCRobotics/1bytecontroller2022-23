@@ -89,7 +89,7 @@ public class BlueleftRedleft extends LinearOpMode
         Viper.setTargetPosition(260);
         Viper.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Viper.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        dildo = hardwareMap.get(Servo.class, "stinger"
+        dildo = hardwareMap.get(Servo.class, "stinger");
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
