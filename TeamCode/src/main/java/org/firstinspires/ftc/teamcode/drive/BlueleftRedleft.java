@@ -28,6 +28,9 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.checkerframework.checker.units.qual.C;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -47,6 +50,8 @@ public class BlueleftRedleft extends LinearOpMode
 {
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
+   private DcMotor Viper;
+    private Servo dildo;
 
     static final double FEET_PER_METER = 3.28084;
 
@@ -59,9 +64,13 @@ public class BlueleftRedleft extends LinearOpMode
     double cx = 402.145;
     double cy = 221.506;
 
+
+
     // UNITS ARE METERS
     double tagsize = 0.166;
-
+    public static int liftVelo = 2000;
+    public static int DownL = 0;
+    public static int TopL = 2000;
     // Tag ID 1,2,3 from the 36h11 family
     int LEFT = 1;
     int MIDDLE = 2;
@@ -70,9 +79,17 @@ public class BlueleftRedleft extends LinearOpMode
     AprilTagDetection tagOfInterest = null;
 
     @Override
-    public void runOpMode() {
+    public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-
+        drive = new SampleMecanumDrive(hardwareMap);
+        Viper = hardwareMap.get(DcMotor.class, "viper");
+        ((DcMotorEx) Viper).setVelocity(liftVelo);
+        Viper.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        Viper.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        Viper.setTargetPosition(260);
+        Viper.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Viper.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        dildo = hardwareMap.get(Servo.class, "stinger"
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
@@ -82,7 +99,7 @@ public class BlueleftRedleft extends LinearOpMode
         camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
             public void onOpened() {
-                camera.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
+                camera.startStreaming(1280, 720, OpenCvCameraRotation.SIDEWAYS_LEFT);
             }
 
             @Override
@@ -98,6 +115,9 @@ public class BlueleftRedleft extends LinearOpMode
 
                 .back(-52)
                 .turn(-1)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> Viper.setTargetPosition(TopL))
+                .UNSTABLE_addTemporalMarkerOffset(1, () ->  dildo.setPosition(0.2))
+                .UNSTABLE_addTemporalMarkerOffset(1.5, () -> Viper.setTargetPosition(DownL))
                 .back(3.5)
                 .turn(1)
 
@@ -105,10 +125,15 @@ public class BlueleftRedleft extends LinearOpMode
                 .build();
         TrajectorySequence Middle = drive.trajectorySequenceBuilder(startpose)
 //add trejectorys
+
                 //.forward(30)
                 //.build();
+                
                 .back(-52)
                 .turn(-1)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> Viper.setTargetPosition(TopL))
+                .UNSTABLE_addTemporalMarkerOffset(1, () ->  dildo.setPosition(0.2))
+                .UNSTABLE_addTemporalMarkerOffset(1.5, () -> Viper.setTargetPosition(DownL))
                 .back(3.5)
                 .turn(1)
 
@@ -123,6 +148,9 @@ public class BlueleftRedleft extends LinearOpMode
                 //.strafeRight(22)
                 .back(-52)
                 .turn(-1)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> Viper.setTargetPosition(TopL))
+                .UNSTABLE_addTemporalMarkerOffset(1, () ->  dildo.setPosition(0.2))
+                .UNSTABLE_addTemporalMarkerOffset(1.5, () -> Viper.setTargetPosition(DownL))
                 .back(3.5)
                 .turn(1)
                 .strafeRight(26)
@@ -139,6 +167,7 @@ public class BlueleftRedleft extends LinearOpMode
          */
         while (!isStarted() && !isStopRequested())
         {
+                   dildo.setPosition(0);
             ArrayList<AprilTagDetection> currentDetections = aprilTagDetectionPipeline.getLatestDetections();
 
             if(currentDetections.size() != 0)
