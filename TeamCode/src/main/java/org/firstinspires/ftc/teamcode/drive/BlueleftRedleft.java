@@ -96,16 +96,22 @@ public class BlueleftRedleft extends LinearOpMode
         Pose2d startpose = new Pose2d();
         TrajectorySequence Left = drive.trajectorySequenceBuilder(startpose)
 
-                .forward(52)
-                .turn(45)
-                //.strafeLeft(22)
+                .back(-52)
+                .turn(-1)
+                .back(3.5)
+                .turn(1)
+
+                .strafeLeft(26)
                 .build();
         TrajectorySequence Middle = drive.trajectorySequenceBuilder(startpose)
 //add trejectorys
                 //.forward(30)
                 //.build();
-                .forward(52)
-                .turn(45)
+                .back(-52)
+                .turn(-1)
+                .back(3.5)
+                .turn(1)
+
                 //.strafeLeft(22)
                 .build();
 
@@ -115,8 +121,11 @@ public class BlueleftRedleft extends LinearOpMode
         TrajectorySequence Right = drive.trajectorySequenceBuilder(startpose)
                 //.forward(26)
                 //.strafeRight(22)
-                .forward(52)
-                .turn(45)
+                .back(-52)
+                .turn(-1)
+                .back(3.5)
+                .turn(1)
+                .strafeRight(26)
                 //.strafeLeft(22)
                 .build();
 //add trejectorys
