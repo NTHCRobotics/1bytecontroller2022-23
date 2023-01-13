@@ -144,6 +144,7 @@ public class BlueRight_RedRight extends LinearOpMode
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> dildo.setPosition(0))
                 .back(-52)
                 .turn(1)
+                .waitSeconds(5)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> Viper.setTargetPosition(TopL))
                 .UNSTABLE_addTemporalMarkerOffset(1, () ->  dildo.setPosition(0.2))
                 .UNSTABLE_addTemporalMarkerOffset(1.5, () -> Viper.setTargetPosition(DownL))
