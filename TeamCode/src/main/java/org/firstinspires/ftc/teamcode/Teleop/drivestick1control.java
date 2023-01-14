@@ -1,10 +1,7 @@
 
 package org.firstinspires.ftc.teamcode.Teleop;
 
-import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
-import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -12,27 +9,9 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.hardware.motors.RevRoboticsCoreHexMotor;
-import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.DigitalChannel;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.hardware.Servo;
 
-
-import java.util.Arrays;
 /**
  * This file contains an example of an iterative (Non-Linear) "OpMode".
  * An OpMode is a 'program' that runs in either the autonomous or the teleop period of an FTC match.
@@ -53,10 +32,10 @@ import java.util.Arrays;
     name = the name that will display on the Driver Hub
     group = allows you to group OpModes
  */
-@TeleOp(name="DriverControl_Pressme;)", group="sai")
+@TeleOp(name="DriverControl_1control;)", group="sai")
 @Config
 //@Disabled  This way it will run on the robot
-public class drivestick extends OpMode {
+public class drivestick1control extends OpMode {
     // Declare OpMode members.
     private final ElapsedTime runtime = new ElapsedTime();  //timer
 
@@ -306,9 +285,9 @@ public class drivestick extends OpMode {
     }
     private void Grabber() {
 
-       if (gamepad2.left_trigger > 0) {
+       if (gamepad1.dpad_left) {
             dildo.setPosition(0.2); //tune this value until
-        } else if (gamepad2.right_trigger > 0) {
+        } else if (gamepad1.dpad_right) {
             dildo.setPosition(0);//tune this value until
         }
     }
@@ -336,12 +315,12 @@ public class drivestick extends OpMode {
 //        }
 
 
-        if (gamepad2.right_bumper) {
+        if (gamepad1.right_bumper) {
             flip.setTargetPosition(flipposPosition[1]);
             flip.setVelocity(650);
             turn.setPosition(0.19);
         }
-        else if (gamepad2.left_bumper) {
+        else if (gamepad1.left_bumper) {
             flip.setTargetPosition(flipposPosition[0]);
             flip.setVelocity(650);
             turn.setPosition(0.85);
