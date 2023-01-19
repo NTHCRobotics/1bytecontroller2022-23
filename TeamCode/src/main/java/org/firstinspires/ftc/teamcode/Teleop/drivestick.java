@@ -78,6 +78,8 @@ public class drivestick extends OpMode {
     private DcMotorEx wheelBL;
     private DcMotorEx wheelBR;
     private DcMotorEx Viper;
+    private Servo flip1;
+    private Servo flip2;
 
     //private DcMotorEx Insertnamehere
     //private DcMotorEx Insertnamehere
@@ -89,8 +91,6 @@ public class drivestick extends OpMode {
     private Servo turn;
 
 
-
-    private DcMotorEx flip;
 
 
 
@@ -116,7 +116,6 @@ public class drivestick extends OpMode {
     @Override
     public void init() {
 
-        flip = hardwareMap.get(DcMotorEx.class, "flip");
 
 
         telemetry.addData("Status", "Initialization Started");
@@ -134,7 +133,8 @@ public class drivestick extends OpMode {
         Viper = hardwareMap.get(DcMotorEx.class, "viper");
         dildo = hardwareMap.get(Servo.class, "stinger");
         turn = hardwareMap.get(Servo.class, "turn");
-
+        flip1 = hardwareMap.get(Servo.class, "fip1");
+        flip2 = hardwareMap.get(Servo.class, "fip2");
 
         //Motor Encoders
         //Wheels
@@ -151,11 +151,7 @@ public class drivestick extends OpMode {
         Viper.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Viper.setTargetPositionTolerance(50);
 
-        flip.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
-        flip.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        flip.setTargetPosition(100);
-        flip.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        flip.setTargetPositionTolerance(20);
+
 
 
         wheelFL.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -177,6 +173,8 @@ public class drivestick extends OpMode {
     @Override
     public void init_loop() {
         turn.setPosition(0.85);
+        flip1.setPosition(0);
+        flip2.setPosition(0);
 
     }
 

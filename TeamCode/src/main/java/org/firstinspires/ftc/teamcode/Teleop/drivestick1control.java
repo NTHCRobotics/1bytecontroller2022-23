@@ -66,6 +66,10 @@ public class drivestick1control extends OpMode {
     private CRServo camera;
     private Servo dildo;
     private Servo turn;
+    private Servo flip1;
+    private Servo flip2;
+
+
 
 
 
@@ -113,6 +117,9 @@ public class drivestick1control extends OpMode {
         Viper = hardwareMap.get(DcMotorEx.class, "viper");
         dildo = hardwareMap.get(Servo.class, "stinger");
         turn = hardwareMap.get(Servo.class, "turn");
+        flip1 = hardwareMap.get(Servo.class, "fip1");
+        flip2 = hardwareMap.get(Servo.class, "fip2");
+
 
 
         //Motor Encoders
