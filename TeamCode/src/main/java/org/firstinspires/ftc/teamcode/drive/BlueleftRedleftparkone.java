@@ -24,29 +24,24 @@ package org.firstinspires.ftc.teamcode.drive;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.checkerframework.checker.units.qual.C;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.drive.AprilTagDetectionPipeline;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
-import org.openftc.easyopencv.OpenCvInternalCamera;
 
 import java.util.ArrayList;
 
 @Autonomous
 @Config
-public class BlueleftRedleft extends LinearOpMode
+public class BlueleftRedleftparkone extends LinearOpMode
 {
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
@@ -129,23 +124,7 @@ public class BlueleftRedleft extends LinearOpMode
 
 
                 .back(-52)
-                .turn(-1)
-                .waitSeconds(2)
-                .UNSTABLE_addTemporalMarkerOffset(0, () ->  ((DcMotorEx) Viper).setVelocity(2000))
-                .UNSTABLE_addTemporalMarkerOffset(0, () ->  Viper.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER))
-                .UNSTABLE_addTemporalMarkerOffset(0, () ->  Viper.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER))
-                .UNSTABLE_addTemporalMarkerOffset(0, () ->  Viper.setTargetPosition(1500))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> Viper.setMode(DcMotorEx.RunMode.RUN_TO_POSITION))
-                .UNSTABLE_addTemporalMarkerOffset(0, () ->  ((DcMotorEx) flip).setVelocity(2000))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> flip.setTargetPosition(0))
 
-                .UNSTABLE_addTemporalMarkerOffset(0, () ->  flip.setMode(DcMotorEx.RunMode.RUN_TO_POSITION))
-                .UNSTABLE_addTemporalMarkerOffset(0, () ->  flip.setTargetPositionTolerance(20))
-
-                .UNSTABLE_addTemporalMarkerOffset(0, () ->  dildo.setPosition(0.2))
-                .UNSTABLE_addTemporalMarkerOffset(20, () -> Viper.setTargetPosition(0))
-                .back(3.5)
-                .turn(1)
 
                 .strafeLeft(26)
                 .build();
@@ -154,27 +133,7 @@ public class BlueleftRedleft extends LinearOpMode
 
                 //.forward(30)
                 //.build();
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->  ((DcMotorEx) Viper).setVelocity(liftVelo))
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->  Viper.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER))
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->  Viper.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER))
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->  Viper.setTargetPosition(260))
-                .UNSTABLE_addTemporalMarkerOffset(1, () -> Viper.setMode(DcMotorEx.RunMode.RUN_TO_POSITION))
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->  Viper.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE))
-
-
-                .UNSTABLE_addTemporalMarkerOffset(1, () -> flip.setTargetPosition(100))
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->  flip.setMode(DcMotorEx.RunMode.RUN_TO_POSITION))
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->  flip.setTargetPositionTolerance(20))
-                .UNSTABLE_addTemporalMarkerOffset(1, () -> ((DcMotorEx) flip).setVelocity(flipVelo))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> dildo.setPosition(0))
                 .back(-52)
-                .turn(-1)
-                .UNSTABLE_addTemporalMarkerOffset(1, () -> Viper.setTargetPosition(260))
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->   flip.setTargetPosition(3))
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->  dildo.setPosition(0.2))
-                .UNSTABLE_addTemporalMarkerOffset(1.5, () -> Viper.setTargetPosition(0))
-                .back(3.5)
-                .turn(1)
 
                 .strafeLeft(26)
                 .build();
@@ -185,27 +144,8 @@ public class BlueleftRedleft extends LinearOpMode
         TrajectorySequence Right = drive.trajectorySequenceBuilder(startpose)
                 //.forward(26)
                 //.strafeRight(22)
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->  ((DcMotorEx) Viper).setVelocity(liftVelo))
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->  Viper.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER))
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->  Viper.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER))
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->  Viper.setTargetPosition(260))
-                .UNSTABLE_addTemporalMarkerOffset(1, () -> Viper.setMode(DcMotorEx.RunMode.RUN_TO_POSITION))
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->  Viper.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE))
 
-
-                .UNSTABLE_addTemporalMarkerOffset(1, () -> flip.setTargetPosition(100))
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->  flip.setMode(DcMotorEx.RunMode.RUN_TO_POSITION))
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->  flip.setTargetPositionTolerance(20))
-                .UNSTABLE_addTemporalMarkerOffset(1, () -> ((DcMotorEx) flip).setVelocity(flipVelo))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> dildo.setPosition(0))
                 .back(-52)
-                .turn(-1)
-                .UNSTABLE_addTemporalMarkerOffset(1, () -> Viper.setTargetPosition(260))
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->   flip.setTargetPosition(3))
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->  dildo.setPosition(0.2))
-                .UNSTABLE_addTemporalMarkerOffset(1.5, () -> Viper.setTargetPosition(0))
-                .back(3.5)
-                .turn(1)
 
                 .strafeLeft(26)
                 .build();
