@@ -78,7 +78,8 @@ public class drivestick extends OpMode {
     private DcMotorEx wheelBL;
     private DcMotorEx wheelBR;
     private DcMotorEx Viper;
-    private Servo claw;
+    private Servo claw1;
+    private Servo claw2;
 
 
     //private DcMotorEx Insertnamehere
@@ -130,7 +131,8 @@ public class drivestick extends OpMode {
         wheelBL = hardwareMap.get(DcMotorEx.class, "wheelBL");
         wheelBR = hardwareMap.get(DcMotorEx.class, "wheelBR");
         Viper = hardwareMap.get(DcMotorEx.class, "viper");
-        claw = hardwareMap.get(Servo.class, "claw");
+        claw1 = hardwareMap.get(Servo.class, "claw1");
+        claw2 = hardwareMap.get(Servo.class, "claw2");
 
 
         //Motor Encoders
@@ -169,7 +171,8 @@ public class drivestick extends OpMode {
      */
     @Override
     public void init_loop() {
-        claw.setPosition(0.85);
+//        claw1.setPosition(0);
+//        claw2.setPosition(0);
 
 
     }
@@ -294,17 +297,13 @@ public class drivestick extends OpMode {
 
         }
         Viper.setTargetPosition(armLevelPosition[armLevel]);
-        Viper.setTargetPositionTolerance(armLevelPosition[armLevel]);
+        Viper.setTargetPositionTolerance(20);
 
     }
     private void Grabber() {
 
-       if (gamepad2.left_trigger > 0) {
-            claw.setPosition(0); //tune this value until
-        } else if (gamepad2.right_trigger > 0) {
-            claw.setPosition(0+0.01);//tune this value until
-        }
-    }}
+    }
+    }
 
 
 
