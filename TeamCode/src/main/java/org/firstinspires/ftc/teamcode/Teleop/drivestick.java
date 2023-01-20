@@ -78,8 +78,8 @@ public class drivestick extends OpMode {
     private DcMotorEx wheelBL;
     private DcMotorEx wheelBR;
     private DcMotorEx Viper;
-    private Servo flip1;
-    private Servo flip2;
+    private Servo claw;
+
 
     //private DcMotorEx Insertnamehere
     //private DcMotorEx Insertnamehere
@@ -87,8 +87,7 @@ public class drivestick extends OpMode {
 
     //Servos
     private CRServo camera;
-    private Servo dildo;
-    private Servo turn;
+
 
 
 
@@ -131,10 +130,8 @@ public class drivestick extends OpMode {
         wheelBL = hardwareMap.get(DcMotorEx.class, "wheelBL");
         wheelBR = hardwareMap.get(DcMotorEx.class, "wheelBR");
         Viper = hardwareMap.get(DcMotorEx.class, "viper");
-        dildo = hardwareMap.get(Servo.class, "stinger");
-        turn = hardwareMap.get(Servo.class, "turn");
-        flip1 = hardwareMap.get(Servo.class, "fip1");
-        flip2 = hardwareMap.get(Servo.class, "fip2");
+        claw = hardwareMap.get(Servo.class, "claw");
+
 
         //Motor Encoders
         //Wheels
@@ -172,9 +169,8 @@ public class drivestick extends OpMode {
      */
     @Override
     public void init_loop() {
-        turn.setPosition(0.85);
-        flip1.setPosition(0);
-        flip2.setPosition(0);
+        claw.setPosition(0.85);
+
 
     }
 
@@ -199,8 +195,7 @@ public class drivestick extends OpMode {
         drivingControl();
         Viperlift();
         Grabber();
-        flipper();
-        turn();
+
 
 
 
@@ -305,59 +300,16 @@ public class drivestick extends OpMode {
     private void Grabber() {
 
        if (gamepad2.left_trigger > 0) {
-            dildo.setPosition(0.2); //tune this value until
+            claw.setPosition(0); //tune this value until
         } else if (gamepad2.right_trigger > 0) {
-            dildo.setPosition(0);//tune this value until
+            claw.setPosition(0+0.01);//tune this value until
         }
-    }
-
-    private void turn() {
-
-        if (gamepad2.b) {
-            turn.setPosition(0.85); //tune this value until
-        } else if (gamepad2.a) {
-            turn.setPosition(0.19);//tune this value until
-        }
-    }
-
-    private void flipper() {
-
-//        if (gamepad2.right_bumper) {
-//            flip.setPower(-0.7);
-//
-//        }  else if (gamepad2.left_bumper) {
-//            flip.setPower(0.7);
-//        }
-//     else {
-//         flip.setPower(-0.27);
-//
-//        }
+    }}
 
 
-        if (gamepad2.right_bumper) {
-            flip.setTargetPosition(flipposPosition[1]);
-            flip.setVelocity(650);
-            turn.setPosition(0.19);
-        }
-        else if (gamepad2.left_bumper) {
-            flip.setTargetPosition(flipposPosition[0]);
-            flip.setVelocity(650);
-            turn.setPosition(0.85);
-        }
-        flip.setVelocity(1000);
-        if (armLevel == 1) {
-            flip.setVelocity(2000);
-
-            //if statement to set speed only going down
-        }
-
-        if (getRuntime() - previousRunTime >= inputDelayInSeconds + .25 && rumbleLevel) {
-
-        }
 
 
-    }
-    }
+
 
 
 
@@ -373,5 +325,4 @@ public class drivestick extends OpMode {
 
 
     //@Override
-
 
