@@ -100,12 +100,13 @@ public class drivestick extends OpMode {
     private final boolean rumbleLevel = true;
     private double rotation = 0;
     final double TRIGGER_THRESHOLD  = 0.75;
-    private int[] armLevelPosition = {0, 1200, 2000, 3000};
+    private int[] armLevelPosition = {0, 1200, 1800, 2200};
     private int[] flipposPosition = {0, 925};
     private boolean isGrabbing = false;
     private int armLevel;
     private double previousRunTime;
     private double inputDelayInSeconds = .5;
+    private boolean clawOpen = true;
 
 
     //double susanPower;
@@ -176,7 +177,13 @@ public class drivestick extends OpMode {
      */
     @Override
     public void init_loop() {
+<<<<<<< Updated upstream
         turn.setPosition(0.85);
+=======
+        claw1.setPosition(0);
+        claw2.setPosition(0.7);
+
+>>>>>>> Stashed changes
 
     }
 
@@ -223,6 +230,7 @@ public class drivestick extends OpMode {
 
         // Show the elapsed game time and power for each wheel.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
+        telemetry.addData("Status", "Claw: " + clawOpen);
         //telemetry.addData("Motors", "wheelFL (%.2f), front right (%.2f), back left (%.2f),  right (%.2f)", wheelFL, wheelFR, wheelBL, wheelBR);
 
 //        telemetry.addData("range", String.format("%.3f cm", sideDistanceSensor.getDistance(DistanceUnit.CM)));
@@ -253,10 +261,10 @@ public class drivestick extends OpMode {
 
     public void drivingControl() {
         //gets controller input
-        double r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
+        double r = Math.hypot(gamepad1.left_stick_x, -gamepad1.left_stick_y);
 
         //make calculations based upon the input
-        double robotAngle = Math.atan2(-gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;
+        double robotAngle = Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;
         double rightX = -gamepad1.right_stick_x;
         rotation += 1 * rightX;
         final double v1 = r * Math.cos(robotAngle) - rightX;
@@ -273,12 +281,12 @@ public class drivestick extends OpMode {
 
     public void Viperlift() {
 
-        if ((gamepad1.dpad_up || gamepad2.dpad_up) && (armLevel < armLevelPosition.length - 1) && (getRuntime() - previousRunTime >= inputDelayInSeconds)) {
+        if ((gamepad2.dpad_up) && (armLevel < armLevelPosition.length - 1) && (getRuntime() - previousRunTime >= inputDelayInSeconds) && !clawOpen) {
 
             previousRunTime = getRuntime();
             armLevel++;
         }
-        if ((gamepad1.dpad_down || gamepad2.dpad_down) && (armLevel > 0) && (getRuntime() - previousRunTime >= inputDelayInSeconds)) {
+        if ((gamepad2.dpad_down) && (armLevel > 0) && (getRuntime() - previousRunTime >= inputDelayInSeconds) && !clawOpen) {
 
             previousRunTime = getRuntime();
             armLevel--;
@@ -287,7 +295,7 @@ public class drivestick extends OpMode {
         }
 
         //sets to driving level
-        if (gamepad1.y || gamepad2.y) {
+        if (gamepad2.y && !clawOpen) {
             armLevel = 1;
         }
 
@@ -300,7 +308,10 @@ public class drivestick extends OpMode {
         if (getRuntime() - previousRunTime >= inputDelayInSeconds + .25 && rumbleLevel) {
 
         }
+
+        Viper.setTargetPositionTolerance(50);
         Viper.setTargetPosition(armLevelPosition[armLevel]);
+<<<<<<< Updated upstream
         Viper.setTargetPositionTolerance(armLevelPosition[armLevel]);
 
     }
@@ -319,8 +330,23 @@ public class drivestick extends OpMode {
             turn.setPosition(0.85); //tune this value until
         } else if (gamepad2.a) {
             turn.setPosition(0.19);//tune this value until
+=======
+
+    }
+    private void Grabber() {
+        if(gamepad2.a && clawOpen){
+            clawOpen = false;
+            claw1.setPosition(0.3);
+            claw2.setPosition(0.5);
+        }
+        else if (gamepad2.b && !clawOpen){
+            clawOpen = true;
+            claw1.setPosition(0);
+            claw2.setPosition(0.7);
+>>>>>>> Stashed changes
         }
     }
+}
 
     private void flipper() {
 
