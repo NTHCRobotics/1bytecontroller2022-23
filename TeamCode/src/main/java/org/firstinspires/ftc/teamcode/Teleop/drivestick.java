@@ -102,7 +102,7 @@ public class drivestick extends OpMode {
     final double TRIGGER_THRESHOLD  = 0.75;
     private int[] armLevelPosition = {0, 1200, 2000, 3000};
     private int[] flipposPosition = {0, 925};
-    private boolean clawOpen = true;
+    private boolean clawOpen = false;
     private int armLevel;
     private double previousRunTime;
     private double inputDelayInSeconds = .5;
@@ -171,8 +171,8 @@ public class drivestick extends OpMode {
      */
     @Override
     public void init_loop() {
-//        claw1.setPosition(0);
-//        claw2.setPosition(0);
+        claw1.setPosition(0.4);
+        claw2.setPosition(0);
 
 
     }
@@ -303,14 +303,15 @@ public class drivestick extends OpMode {
     private void Grabber() {
         if(gamepad2.a && clawOpen){
             clawOpen = false;
-            claw1.setPosition(0.3);
-            claw2.setPosition(0.5);
+            claw1.setPosition(0.4);
+            claw2.setPosition(0);
         }
         else if (gamepad2.b && !clawOpen){
             clawOpen = true;
             claw1.setPosition(0);
-            claw2.setPosition(0.7);
+            claw2.setPosition(0.4);
         }
+
     }
     }
 
