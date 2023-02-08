@@ -102,7 +102,7 @@ public class drivestick extends OpMode {
     final double TRIGGER_THRESHOLD  = 0.75;
     private int[] armLevelPosition = {0, 1200, 2000, 3000};
     private int[] flipposPosition = {0, 925};
-    private boolean isGrabbing = false;
+    private boolean clawOpen = true;
     private int armLevel;
     private double previousRunTime;
     private double inputDelayInSeconds = .5;
@@ -269,12 +269,12 @@ public class drivestick extends OpMode {
 
     public void Viperlift() {
 
-        if ((gamepad1.dpad_up || gamepad2.dpad_up) && (armLevel < armLevelPosition.length - 1) && (getRuntime() - previousRunTime >= inputDelayInSeconds)) {
+        if ((gamepad1.dpad_up || gamepad2.dpad_up) && (armLevel < armLevelPosition.length - 1) && (getRuntime() - previousRunTime >= inputDelayInSeconds) && !clawOpen) {
 
             previousRunTime = getRuntime();
             armLevel++;
         }
-        if ((gamepad1.dpad_down || gamepad2.dpad_down) && (armLevel > 0) && (getRuntime() - previousRunTime >= inputDelayInSeconds)) {
+        if ((gamepad1.dpad_down || gamepad2.dpad_down) && (armLevel > 0) && (getRuntime() - previousRunTime >= inputDelayInSeconds) && !clawOpen) {
 
             previousRunTime = getRuntime();
             armLevel--;
@@ -283,7 +283,7 @@ public class drivestick extends OpMode {
         }
 
         //sets to driving level
-        if (gamepad1.y || gamepad2.y) {
+        if ((gamepad1.y || gamepad2.y) && !clawOpen) {
             armLevel = 1;
         }
 
@@ -301,7 +301,16 @@ public class drivestick extends OpMode {
 
     }
     private void Grabber() {
-
+        if(gamepad2.a && clawOpen){
+            clawOpen = false;
+            claw1.setPosition(0.3);
+            claw2.setPosition(0.5);
+        }
+        else if (gamepad2.b && !clawOpen){
+            clawOpen = true;
+            claw1.setPosition(0);
+            claw2.setPosition(0.7);
+        }
     }
     }
 
