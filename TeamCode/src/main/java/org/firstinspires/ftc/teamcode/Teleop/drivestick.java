@@ -100,10 +100,10 @@ public class drivestick extends OpMode {
     private final boolean rumbleLevel = true;
     private double rotation = 0;
     final double TRIGGER_THRESHOLD  = 0.75;
-    private int[] armLevelPosition = {0, 1200, 2000, 3000};
+    private int[] armLevelPosition = {0, 1200, 1800, 2400};
     private int[] flipposPosition = {0, 925};
     private boolean clawOpen = false;
-    private int armLevel;
+    private int armLevel = 0;
     private double previousRunTime;
     private double inputDelayInSeconds = .5;
 
@@ -171,7 +171,7 @@ public class drivestick extends OpMode {
      */
     @Override
     public void init_loop() {
-        claw1.setPosition(0.4);
+        claw1.setPosition(0.2);
         claw2.setPosition(0);
 
 
@@ -287,6 +287,10 @@ public class drivestick extends OpMode {
             armLevel = 1;
         }
 
+        if ((gamepad2.share) && !clawOpen) {
+            armLevel = 0;
+        }
+
         Viper.setVelocity(2000);
         if (armLevel == 1) {
             Viper.setVelocity(2000);
@@ -303,13 +307,13 @@ public class drivestick extends OpMode {
     private void Grabber() {
         if(gamepad2.a && clawOpen){
             clawOpen = false;
-            claw1.setPosition(0.4);
+            claw1.setPosition(0.25);
             claw2.setPosition(0);
         }
         else if (gamepad2.b && !clawOpen){
             clawOpen = true;
             claw1.setPosition(0);
-            claw2.setPosition(0.4);
+            claw2.setPosition(0.15);
         }
 
     }
