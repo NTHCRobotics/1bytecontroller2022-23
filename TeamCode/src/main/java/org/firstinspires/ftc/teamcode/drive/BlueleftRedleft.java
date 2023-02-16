@@ -50,10 +50,10 @@ public class BlueleftRedleft extends LinearOpMode
 {
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
-   private DcMotor Viper;
-    private Servo dildo;
-    private DcMotorEx flip;
+   private DcMotorEx Viper;
 
+    private Servo claw1;
+    private Servo claw2;
     static final double FEET_PER_METER = 3.28084;
 
     // Lens intrinsics
@@ -87,22 +87,14 @@ public class BlueleftRedleft extends LinearOpMode
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         drive = new SampleMecanumDrive(hardwareMap);
         Viper = hardwareMap.get(DcMotorEx.class, "viper");
-        dildo = hardwareMap.get(Servo.class, "stinger");
-                flip = hardwareMap.get(DcMotorEx.class, "flip");
+        claw1 = hardwareMap.get(Servo.class, "claw1");
+        claw2 = hardwareMap.get(Servo.class, "claw2");
 
-//        ((DcMotorEx) Viper).setVelocity(liftVelo);
-//        Viper.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
-//        Viper.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-//        Viper.setTargetPosition(260);
-//        Viper.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-//        Viper.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-//        dildo = hardwareMap.get(Servo.class, "stinger");
-//
-//        flip.setTargetPosition(100);
-//        flip.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-//        flip.setTargetPositionTolerance(20);
-//        flip = hardwareMap.get(DcMotorEx.class, "flip");
-//        ((DcMotorEx) flip).setVelocity(flipVelo);
+
+        Viper.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        Viper.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        Viper.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
@@ -121,7 +113,7 @@ public class BlueleftRedleft extends LinearOpMode
             }
         });
 //flip.setTargetPosition(flipposPosition[0]);
-//            flip.setVelocity(650);
+
         telemetry.setMsTransmissionInterval(50);
 //add trejectorys
         Pose2d startpose = new Pose2d();
@@ -131,19 +123,9 @@ public class BlueleftRedleft extends LinearOpMode
                 .back(-52)
                 .turn(-1)
                 .waitSeconds(2)
-                .UNSTABLE_addTemporalMarkerOffset(0, () ->  ((DcMotorEx) Viper).setVelocity(2000))
-                .UNSTABLE_addTemporalMarkerOffset(0, () ->  Viper.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER))
-                .UNSTABLE_addTemporalMarkerOffset(0, () ->  Viper.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER))
-                .UNSTABLE_addTemporalMarkerOffset(0, () ->  Viper.setTargetPosition(1500))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> Viper.setMode(DcMotorEx.RunMode.RUN_TO_POSITION))
-                .UNSTABLE_addTemporalMarkerOffset(0, () ->  ((DcMotorEx) flip).setVelocity(2000))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> flip.setTargetPosition(0))
+                .addTemporalMarker(() -> Viper.setTargetPosition(2))
+                .addTemporalMarker(() -> Viper.setVelocity(2000))
 
-                .UNSTABLE_addTemporalMarkerOffset(0, () ->  flip.setMode(DcMotorEx.RunMode.RUN_TO_POSITION))
-                .UNSTABLE_addTemporalMarkerOffset(0, () ->  flip.setTargetPositionTolerance(20))
-
-                .UNSTABLE_addTemporalMarkerOffset(0, () ->  dildo.setPosition(0.2))
-                .UNSTABLE_addTemporalMarkerOffset(20, () -> Viper.setTargetPosition(0))
                 .back(3.5)
                 .turn(1)
 
@@ -154,25 +136,12 @@ public class BlueleftRedleft extends LinearOpMode
 
                 //.forward(30)
                 //.build();
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->  ((DcMotorEx) Viper).setVelocity(liftVelo))
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->  Viper.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER))
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->  Viper.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER))
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->  Viper.setTargetPosition(260))
-                .UNSTABLE_addTemporalMarkerOffset(1, () -> Viper.setMode(DcMotorEx.RunMode.RUN_TO_POSITION))
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->  Viper.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE))
 
-
-                .UNSTABLE_addTemporalMarkerOffset(1, () -> flip.setTargetPosition(100))
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->  flip.setMode(DcMotorEx.RunMode.RUN_TO_POSITION))
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->  flip.setTargetPositionTolerance(20))
-                .UNSTABLE_addTemporalMarkerOffset(1, () -> ((DcMotorEx) flip).setVelocity(flipVelo))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> dildo.setPosition(0))
                 .back(-52)
                 .turn(-1)
-                .UNSTABLE_addTemporalMarkerOffset(1, () -> Viper.setTargetPosition(260))
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->   flip.setTargetPosition(3))
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->  dildo.setPosition(0.2))
-                .UNSTABLE_addTemporalMarkerOffset(1.5, () -> Viper.setTargetPosition(0))
+                .waitSeconds(2)
+                .addTemporalMarker(() -> Viper.setTargetPosition(2))
+                .addTemporalMarker(() -> Viper.setVelocity(2000))
                 .back(3.5)
                 .turn(1)
 
@@ -185,25 +154,15 @@ public class BlueleftRedleft extends LinearOpMode
         TrajectorySequence Right = drive.trajectorySequenceBuilder(startpose)
                 //.forward(26)
                 //.strafeRight(22)
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->  ((DcMotorEx) Viper).setVelocity(liftVelo))
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->  Viper.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER))
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->  Viper.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER))
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->  Viper.setTargetPosition(260))
-                .UNSTABLE_addTemporalMarkerOffset(1, () -> Viper.setMode(DcMotorEx.RunMode.RUN_TO_POSITION))
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->  Viper.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE))
 
 
-                .UNSTABLE_addTemporalMarkerOffset(1, () -> flip.setTargetPosition(100))
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->  flip.setMode(DcMotorEx.RunMode.RUN_TO_POSITION))
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->  flip.setTargetPositionTolerance(20))
-                .UNSTABLE_addTemporalMarkerOffset(1, () -> ((DcMotorEx) flip).setVelocity(flipVelo))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> dildo.setPosition(0))
+
+
                 .back(-52)
                 .turn(-1)
-                .UNSTABLE_addTemporalMarkerOffset(1, () -> Viper.setTargetPosition(260))
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->   flip.setTargetPosition(3))
-                .UNSTABLE_addTemporalMarkerOffset(1, () ->  dildo.setPosition(0.2))
-                .UNSTABLE_addTemporalMarkerOffset(1.5, () -> Viper.setTargetPosition(0))
+                .waitSeconds(2)
+                .addTemporalMarker(() -> Viper.setTargetPosition(2))
+                .addTemporalMarker(() -> Viper.setVelocity(2000))
                 .back(3.5)
                 .turn(1)
 
@@ -220,7 +179,7 @@ public class BlueleftRedleft extends LinearOpMode
          */
         while (!isStarted() && !isStopRequested())
         {
-                   dildo.setPosition(0);
+
             ArrayList<AprilTagDetection> currentDetections = aprilTagDetectionPipeline.getLatestDetections();
 
             if(currentDetections.size() != 0)
@@ -304,7 +263,6 @@ public class BlueleftRedleft extends LinearOpMode
         }else{
             drive.followTrajectorySequence(Right);
         }
-
 
         /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */
         while (opModeIsActive()) {sleep(20);}
