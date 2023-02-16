@@ -230,17 +230,15 @@ public class drivestick extends OpMode {
 
     public void precisionControl() {
         if (gamepad1.left_trigger > 0) {
-            speedMod = .25;
-            gamepad1.rumble(1, 1, 200);
-            gamepad2.rumble(1, 1, 200);
+            speedMod = 0.4;
+            gamepad1.rumble(0.7, 0.7, 200);
         } else if (gamepad1.right_trigger > 0) {
 
-            speedMod = 0.5;
-            gamepad1.rumble(1, 1, 200);
-            gamepad2.rumble(1, 1, 200);
+            speedMod = 0.6;
+            gamepad1.rumble(0.7, 0.7, 200);
 
         } else {
-            speedMod = 1;
+            speedMod = 0.8;
            gamepad1.stopRumble();
            gamepad2.stopRumble();
             //youtube
