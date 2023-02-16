@@ -100,7 +100,7 @@ public class drivestick extends OpMode {
     private final boolean rumbleLevel = true;
     private double rotation = 0;
     final double TRIGGER_THRESHOLD  = 0.75;
-    private int[] armLevelPosition = {0, 1200, 2000, 3000};
+    private int[] armLevelPosition = {0, 1200, 2050, 2950};
     private int[] flipposPosition = {0, 925};
     private boolean clawOpen = false;
     private int armLevel;
@@ -304,7 +304,7 @@ public class drivestick extends OpMode {
         if(gamepad2.a && clawOpen){
             clawOpen = false;
             claw1.setPosition(0.4);
-            claw2.setPosition(0);
+            claw2.setPosition(-0.1);
         }
         else if (gamepad2.b && !clawOpen){
             clawOpen = true;
