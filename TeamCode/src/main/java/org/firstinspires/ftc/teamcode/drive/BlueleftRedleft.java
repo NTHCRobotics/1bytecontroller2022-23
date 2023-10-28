@@ -26,6 +26,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -46,6 +47,8 @@ import java.util.ArrayList;
 
 @Autonomous
 @Config
+@Disabled //remove later after testing.
+
 public class BlueleftRedleft extends LinearOpMode
 {
     OpenCvCamera camera;
@@ -89,6 +92,7 @@ public class BlueleftRedleft extends LinearOpMode
         Viper = hardwareMap.get(DcMotorEx.class, "viper");
         claw1 = hardwareMap.get(Servo.class, "claw1");
         claw2 = hardwareMap.get(Servo.class, "claw2");
+
 
 
         Viper.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);

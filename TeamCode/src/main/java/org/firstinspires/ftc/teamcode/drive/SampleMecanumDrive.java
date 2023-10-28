@@ -130,11 +130,15 @@ public class SampleMecanumDrive extends MecanumDrive {
         leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
         rightRear.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        //leftFront.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-       // rightFront.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-       // leftRear.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-      // rightRear.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);
+
+
+
+        leftFront.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        rightFront.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        leftRear.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);     //using the built in motor encoders you can be able to automaticlly make the motors go the same speed :)
+       rightRear.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront); // this array of variables is able to determine which potition the wheel are in no matter where they atr on the bot.
+
 
         for (DcMotorEx motor : motors) {
             MotorConfigurationType motorConfigurationType = motor.getMotorType().clone();

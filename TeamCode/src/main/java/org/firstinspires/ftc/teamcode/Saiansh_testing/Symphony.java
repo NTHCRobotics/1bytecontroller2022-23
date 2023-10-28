@@ -67,6 +67,7 @@ class Symphony
 
         webcam.setPipeline(pipeline);
 
+
         webcam.startStreaming(800,448, OpenCvCameraRotation.UPRIGHT);
 
         searched_tags = tags_to_search_for.clone();
